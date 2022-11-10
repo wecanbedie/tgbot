@@ -1,5 +1,6 @@
 import requests
-
+import os.path
+from urllib.parse import urlparse, unquote
 
 def get_extension_link(link):
     link_unquote = unquote(link)
