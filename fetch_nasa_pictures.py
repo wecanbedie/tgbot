@@ -12,11 +12,10 @@ def fetch_nasa_pictures(NASA_API_KEY):
     nasa_response = requests.get(nasa_url, params=params)
     nasa_pictures_links = nasa_response.json()
     for nasa_picture in nasa_pictures_links:
-        if nasa_picture['url']:
+        if nasa_picture['media_type'] == 'image':
             nasa_picture_located_link = nasa_picture['url']
-            filename, expansion = (get_extension_link(nasa_picture_located_link)) 
+            filename, expansion = get_extension_link(nasa_picture_located_link) 
             if not expansion:
-                #break
                 continue
             folder = 'images'    
             fullname = f'{filename}{expansion}'   
