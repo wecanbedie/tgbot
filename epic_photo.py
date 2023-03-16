@@ -6,7 +6,7 @@ from download_photo import download_photo
 from get_extension_link import get_extension_link
 from dotenv import load_dotenv
 
-def epic_photo(nasa_api_key):
+def fetch_epic_photo(nasa_api_key):
     epic_url = 'https://api.nasa.gov/EPIC/api/natural/images'
     params = {"api_key": nasa_api_key}
     epic_response = requests.get(epic_url, params=params)
@@ -29,7 +29,7 @@ def main():
 
     load_dotenv()
     nasa_api_key = os.environ["NASA_API_KEY"]
-    epic_photo(nasa_api_key)
+    fetch_epic_photo(nasa_api_key)
 
 
 if __name__=="__main__":

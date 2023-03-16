@@ -4,6 +4,7 @@ import os.path
 from dotenv import load_dotenv
 from download_photo import download_photo
 from get_extension_link import get_extension_link
+from pathlib import Path
 
 def fetch_nasa_pictures(NASA_API_KEY):
     nasa_url = "https://api.nasa.gov/planetary/apod" 
@@ -24,6 +25,8 @@ def fetch_nasa_pictures(NASA_API_KEY):
 
 
 def main():
+    Path("images").mkdir(parents=True, exist_ok=True)
+
     load_dotenv()
     NASA_API_KEY = os.environ["NASA_API_KEY"]
     fetch_nasa_pictures(NASA_API_KEY)

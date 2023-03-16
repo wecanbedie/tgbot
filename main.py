@@ -28,13 +28,13 @@ def main():
     Path("images").mkdir(parents=True, exist_ok=True)
     
     load_dotenv()
-    TG_BOT_TOKEN = os.environ["TG_BOT_TOKEN"]
-    TG_CHAT_ID = os.environ["TG_CHAT_ID"]
+    tg_bot_token = os.environ["TG_BOT_TOKEN"]
+    tg_chat_id = os.environ["TG_CHAT_ID"]
     publication_frequency = os.getenv('PUBLICATION_FREQUENCY', default=14400)
-    bot = telegram.Bot(token=TG_BOT_TOKEN)
+    bot = telegram.Bot(token=tg_bot_token)
 
     
-    tg_picture_bot(TG_CHAT_ID, bot, publication_frequency)
+    tg_picture_bot(tg_chat_id, bot, publication_frequency)
 
 
     
