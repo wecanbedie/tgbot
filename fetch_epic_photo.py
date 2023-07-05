@@ -4,7 +4,7 @@ import os.path
 
 from pathlib import Path
 from download_photo import download_photo
-from get_extension_link import get_extension_link
+from get_extension_link import get_file_format_link
 from dotenv import load_dotenv
 from datetime import datetime
 
@@ -18,7 +18,7 @@ def fetch_epic_photo(nasa_api_key):
         image_name = picture['image'] 
         formated_image_date = datetime.fromisoformat(image_date).strftime("%Y/%m/%d")
         link = f'https://api.nasa.gov/EPIC/archive/natural/{formated_image_date}/png/{image_name}.png'
-        filename, expansion = get_extension_link(link)
+        filename, expansion = get_file_format_link(link)
         folder = 'images'
         fullname = f'{filename}{expansion}'
         file_path = os.path.join(folder, fullname)

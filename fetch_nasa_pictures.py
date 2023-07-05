@@ -28,7 +28,7 @@ def main():
     Path("images").mkdir(parents=True, exist_ok=True)
 
     load_dotenv()
-    nasa_api_key = os.environ["nasa_api_key"]
+    nasa_api_key = os.environ["NASA_API_KEY"]
     fetch_nasa_pictures(nasa_api_key)
 
 
