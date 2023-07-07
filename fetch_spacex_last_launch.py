@@ -1,11 +1,9 @@
 import os.path
 import os
-from pathlib import Path
+import requests
 import argparse
 
-import requests
-from dotenv import load_dotenv
-
+from pathlib import Path
 from download_photo import download_photo
 
 
@@ -16,8 +14,7 @@ def download_photos_spacex(spacex_image_directory, spacex_last_launch):
     response = requests.get(spacex_url)
     response.raise_for_status()
 
-    spacex_link = response.json(
-    )[spacex_last_launch]['links']['flickr']['original']
+    spacex_link = response.json()[spacex_last_launch]['links']['flickr']['original']
 
     for number, image_url in enumerate(spacex_link):
         fullname = f'{number}{spacex_file_name}.jpg'
@@ -26,14 +23,14 @@ def download_photos_spacex(spacex_image_directory, spacex_last_launch):
 
 
 def main():
-    load_dotenv()
-    parser = argparse.ArgumentParser(
-      description='Номер запуска'
-    )
-    parser.add_argument('spacex_id', default=66, 
-                        type=int, nargs='?')
-    spacex_launch = parser.parse_args().spacex_id
-    space_image_directory = 'images'
+    parser = argparse.ArgumentParser(description='Скачивает фото c последнего запуска.')
+    parser.add_argument('--folder', type=str, help='Путь к папке c фотографиями.', default='images')
+    parser.add_argument('--spacex_id', default=66, type=int, nargs='?')
+    args = parser.parse_args()
+
+    spacex_launch = args.spacex_id
+    space_image_directory = args.folder
+    
     Path(space_image_directory).mkdir(parents=True, exist_ok=True)
     download_photos_spacex(space_image_directory, spacex_launch)
 
