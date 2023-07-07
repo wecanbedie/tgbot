@@ -1,13 +1,13 @@
 import os.path
 import telegram
+import argparse
 
 from time import sleep
 from pathlib import Path
 from dotenv import load_dotenv
 
 
-def publication_tg_picture_bot(tg_chat_id, bot, publication_frequency):
-    directory = 'images'
+def publication_tg_picture_bot(tg_chat_id, bot, publication_frequency, directory):
     picture_filepath = os.listdir(directory)
     while True:
         try:
@@ -15,7 +15,7 @@ def publication_tg_picture_bot(tg_chat_id, bot, publication_frequency):
                 filepath = os.path.join(directory, filename)
                 send_message(tg_chat_id, bot, filepath)
                 sleep(int(publication_frequency))
-        except ConnectionError:
+        except telegram.error.NetworkError:
             sleep(3)
 
 
@@ -25,16 +25,20 @@ def send_message(chat_id, bot, filepath):
 
 
 def main():
-    Path("images").mkdir(parents=True, exist_ok=True)
-    
     load_dotenv()
+    parser = argparse.ArgumentParser(description='Отправляет фотографии через бота в телеграм-канал.')
+    parser.add_argument('--frequency', type=int, help='Количество секунд между отправкой изображений.', default=14400)
+    parser.add_argument('--folder', type=str, help='Путь к папке c фотографиями.', default='images')
+    args = parser.parse_args()
+    Path(args.folder).mkdir(parents=True, exist_ok=True)
+
     tg_bot_token = os.environ["TG_BOT_TOKEN"]
     tg_chat_id = os.environ["TG_CHAT_ID"]
-    publication_frequency = os.getenv('PUBLICATION_FREQUENCY', default=14400)
+    publication_frequency = args.frequency
     bot = telegram.Bot(token=tg_bot_token)
 
     
-    publication_tg_picture_bot(tg_chat_id, bot, publication_frequency)
+    publication_tg_picture_bot(tg_chat_id, bot, publication_frequency, args.folder)
 
 
     
