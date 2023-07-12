@@ -7,14 +7,14 @@ from pathlib import Path
 from download_photo import download_photo
 
 
-def download_photos_spacex(spacex_image_directory, spacex_last_launch):
+def download_photos(spacex_image_directory, spacex_launch):
     spacex_file_name = 'image_spacex'
     spacex_url = 'https://api.spacexdata.com/v4/launches'
 
     response = requests.get(spacex_url)
     response.raise_for_status()
 
-    spacex_link = response.json()[spacex_last_launch]['links']['flickr']['original']
+    spacex_link = response.json()[spacex_launch]['links']['flickr']['original']
 
     for number, image_url in enumerate(spacex_link):
         fullname = f'{number}{spacex_file_name}.jpg'
@@ -32,7 +32,7 @@ def main():
     space_image_directory = args.folder
     
     Path(space_image_directory).mkdir(parents=True, exist_ok=True)
-    download_photos_spacex(space_image_directory, spacex_launch)
+    download_photos(space_image_directory, spacex_launch)
 
 
 if __name__ == "__main__":
