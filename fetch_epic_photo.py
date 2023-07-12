@@ -1,6 +1,5 @@
 import requests
 import os.path
-#import datetime
 import argparse
 
 from pathlib import Path
@@ -15,10 +14,10 @@ def fetch_epic_photo(nasa_api_key, folder):
     response = requests.get(url, params=params)
     response_links = response.json()  
     for picture in response_links:
-        image_date = picture['date']#.datetime.fromisoformat(date)
+        image_date = picture['date']
         image_name = picture['image'] 
-        formated_image_date = datetime.fromisoformat(image_date).strftime("%Y/%m/%d")
-        link = f'https://api.nasa.gov/EPIC/archive/natural/{formated_image_date}/png/{image_name}.png'
+        formatted_image_date = datetime.fromisoformat(image_date).strftime("%Y/%m/%d")
+        link = f'https://api.nasa.gov/EPIC/archive/natural/{formatted_image_date}/png/{image_name}.png'
         filename, expansion = get_file_format_link(link)
         fullname = f'{filename}{expansion}'
         file_path = os.path.join(folder, fullname)
