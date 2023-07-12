@@ -7,14 +7,14 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
-def publication_tg_picture_bot(tg_chat_id, bot, publication_frequency, directory):
+def publicate_picture(tg_chat_id, bot, publication_frequency, directory):
     picture_filepath = os.listdir(directory)
     while True:
         try:
             for filename in picture_filepath:
                 filepath = os.path.join(directory, filename)
                 send_message(tg_chat_id, bot, filepath)
-                sleep(int(publication_frequency))
+                sleep(publication_frequency)
         except telegram.error.NetworkError:
             sleep(3)
 
@@ -38,7 +38,7 @@ def main():
     bot = telegram.Bot(token=tg_bot_token)
 
     
-    publication_tg_picture_bot(tg_chat_id, bot, publication_frequency, args.folder)
+    publicate_picture(tg_chat_id, bot, publication_frequency, args.folder)
 
 
     
