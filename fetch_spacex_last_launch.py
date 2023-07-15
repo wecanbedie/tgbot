@@ -30,7 +30,7 @@ def main():
 
     spacex_launch = args.spacex_id
     space_image_directory = args.folder
-    
+
     Path(space_image_directory).mkdir(parents=True, exist_ok=True)
     download_photos(space_image_directory, spacex_launch)
 

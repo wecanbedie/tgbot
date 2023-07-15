@@ -37,12 +37,8 @@ def main():
     publication_frequency = args.frequency
     bot = telegram.Bot(token=tg_bot_token)
 
-    
     publicate_picture(tg_chat_id, bot, publication_frequency, args.folder)
 
 
-    
-
 if __name__ == "__main__":
     main()
-
